@@ -81,7 +81,7 @@ public class Operations {
      public static boolean addNewStudent(int userID, String userName, String majorType, String studentLevel, int ageOfStudent, JFrame frame){
          try{
              Connection myConn = MySQLConnection.getConnection();
-             PreparedStatement pst = myConn.prepareStatement("INSERT into students VALUES (?,?,?,?,?)");
+             PreparedStatement pst = myConn.prepareStatement("INSERT into students (sid, sname, major, s_level, age) VALUES (?,?,?,?,?) ");
              
              pst.setInt(1, userID);
              pst.setString(2, userName);
@@ -99,19 +99,38 @@ public class Operations {
          return false;
      }
     
-     public static boolean updateStudent(int userID, String userName, String majorType, String studentLevel, int ageOfStudent, JFrame frame){
+     public static boolean updateStudent(int id, int userID, String userName, String majorType, String studentLevel, int ageOfStudent, JFrame frame){
          
         try{
          Connection myConn = MySQLConnection.getConnection();
-         PreparedStatement pst = myConn.prepareStatement("UPDATE students SET sid =?, sname=?"
-             + "major =?, s_level =?, age =?");
+         PreparedStatement pst = myConn.prepareStatement("UPDATE students SET sid =?, sname=?,"
+             + "major =?, s_level =?, age =? where id =?");
          
         
          pst.setInt(1, userID);
          pst.setString(2, userName);
          pst.setString(3, majorType);
          pst.setString(4, studentLevel);
-         pst.setInt(5, ageOfStudent);  
+         pst.setInt(5, ageOfStudent); 
+         pst.setInt(6,id);
+         pst.executeUpdate();
+             
+        return true;
+        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(frame, "Database Error: " + e.getMessage());
+        }
+        return false;
+    }
+     public static boolean deleteStudent(int id, int userID, String userName, String majorType, String studentLevel, int ageOfStudent, JFrame frame){
+         
+        try{
+         Connection myConn = MySQLConnection.getConnection();
+         PreparedStatement pst = myConn.prepareStatement("DELETE FROM students where "
+                 + "id =?");
+         
+        
+         pst.setInt(1, id);
          pst.executeUpdate();
              
         return true;

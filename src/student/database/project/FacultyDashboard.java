@@ -8,9 +8,11 @@ package student.database.project;
 import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
+import javax.swing.JTable;
 
 /**
  *
@@ -46,6 +48,7 @@ public class FacultyDashboard extends javax.swing.JFrame {
                 Vector columnData = new Vector();
                 
                 for (i = 1; i <= q; i++){
+                    columnData.add(rs.getString("id"));
                     columnData.add(rs.getString("sid"));
                     columnData.add(rs.getString("sname"));
                     columnData.add(rs.getString("major"));
@@ -108,10 +111,9 @@ public class FacultyDashboard extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         exit_button = new javax.swing.JButton();
         addnew_button = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        printButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -361,7 +363,7 @@ public class FacultyDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Student ID", "Student Name", "Student Major", "Student Level", "Student Age"
+                "ID", "Student ID", "Student Name", "Student Major", "Student Level", "Student Age"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -396,14 +398,14 @@ public class FacultyDashboard extends javax.swing.JFrame {
         });
         jPanel6.add(addnew_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 210, 60));
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jButton4.setText("Print");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        printButton.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        printButton.setText("Print");
+        printButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                printButtonActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 210, 60));
+        jPanel6.add(printButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 210, 60));
 
         updateButton.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         updateButton.setText("Update");
@@ -412,15 +414,16 @@ public class FacultyDashboard extends javax.swing.JFrame {
                 updateButtonActionPerformed(evt);
             }
         });
-        jPanel6.add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, 210, 60));
+        jPanel6.add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 210, 60));
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jButton6.setText("Reset");
-        jPanel6.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, 210, 60));
-
-        jButton7.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jButton7.setText("Delete");
-        jPanel6.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 20, 210, 60));
+        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+        jPanel6.add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 20, 210, 60));
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 1410, 100));
 
@@ -467,10 +470,11 @@ public class FacultyDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_studentmajor_txtActionPerformed
 
     private void addnew_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addnew_buttonActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
         Operations operations = new Operations();
     
         try{
+            
             int userID = Integer.parseInt(studentid_txt1.getText());
             String userName = studentname_txt1.getText();
             String majorType = studentmajor_txt.getText();
@@ -495,9 +499,19 @@ public class FacultyDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_studentname_txt1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
+        // TODO add your handling code here:]
+        MessageFormat header = new MessageFormat("Printing in Progress...");
+        MessageFormat footer = new MessageFormat("Page {0, number, integer}");
+        
+        try
+        {
+            jTable1.print(JTable.PrintMode.NORMAL, header, footer);
+            
+        }catch(java.awt.print.PrinterException e){
+            System.err.format("No printer found", e.getMessage());
+        }
+    }//GEN-LAST:event_printButtonActionPerformed
 
     private void exit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_buttonActionPerformed
         // TODO add your handling code here:
@@ -533,7 +547,7 @@ public class FacultyDashboard extends javax.swing.JFrame {
             String studentLevel = studentlvl_txt1.getText();
             int ageOfStudent = Integer.parseInt(studentage_txt.getText());
             
-            if(operations.updateStudent(userID, userName, majorType, studentLevel, ageOfStudent, this)){
+            if(operations.updateStudent(id, userID, userName, majorType, studentLevel, ageOfStudent, this)){
                  JOptionPane.showMessageDialog(this, "You've succesfully update the table!");
                  UpdateDB();
             }
@@ -543,6 +557,36 @@ public class FacultyDashboard extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel RecordTable = (DefaultTableModel)jTable1.getModel();
+        int SelectedRows = jTable1.getSelectedRow();
+        
+        Operations operations = new Operations();
+    
+        try{
+            int id = Integer.parseInt(RecordTable.getValueAt(SelectedRows,0).toString());
+            int deleteItem = JOptionPane.showConfirmDialog(null, "Confirm if you want to delete item",
+                    "Warning", JOptionPane.YES_NO_OPTION);
+            
+            if(deleteItem == JOptionPane.YES_OPTION){
+            int userID = Integer.parseInt(studentid_txt1.getText());
+            String userName = studentname_txt1.getText();
+            String majorType = studentmajor_txt.getText();
+            String studentLevel = studentlvl_txt1.getText();
+            int ageOfStudent = Integer.parseInt(studentage_txt.getText());
+            
+            if(operations.deleteStudent(id, userID, userName, majorType, studentLevel, ageOfStudent, this)){
+                 JOptionPane.showMessageDialog(this, "You've succesfully deleted the record from the table!");
+                 UpdateDB();
+                }
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Please type corret information");
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -591,10 +635,8 @@ public class FacultyDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbo_pharm;
     private javax.swing.JComboBox<String> cbo_pyschology;
     private javax.swing.JComboBox<String> cbo_wildlife;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JButton exit_button;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -621,6 +663,7 @@ public class FacultyDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton printButton;
     private javax.swing.JTextField studentage_txt;
     private javax.swing.JTextField studentid_txt1;
     private javax.swing.JTextField studentlvl_txt1;
