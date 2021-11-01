@@ -1,4 +1,4 @@
-# Student--Facilt--Staff-Database-Managment-System
+# Student, Faculty, Staff, Database-Managment-System
 
 Used Apache net beans for styling forms.
 Database used was mySQL. 
