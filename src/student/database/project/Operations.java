@@ -105,6 +105,12 @@ public class Operations {
          Connection myConn = MySQLConnection.getConnection();
          PreparedStatement pst = myConn.prepareStatement("UPDATE students SET sid =?, sname=?,"
              + "major =?, s_level =?, age =? where id =?");
+         PreparedStatement pst2 = myConn.prepareStatement("UPDATE courses SET cname =?, meets_at=?,"
+             + "room =?");
+         PreparedStatement pst3 = myConn.prepareStatement("UPDATE enrolled SET exam1 =?, exam2 =?,"
+             + "final =?");
+         PreparedStatement pst4 = myConn.prepareStatement("UPDATE faculty SET fname =?, fid =?");
+         PreparedStatement pst5 = myConn.prepareStatement("UPDATE department SET dname =?, did =?,");
          
         
          pst.setInt(1, userID);
@@ -140,5 +146,26 @@ public class Operations {
         }
         return false;
     }
+     public static boolean gradeBook(int userID, JFrame frame){
+          try{
+             Connection myConn = MySQLConnection.getConnection();
+             PreparedStatement pst = myConn.prepareStatement("SELECT students.sid, courses.cid, courses.meets_at, courses.room, courses.fid, enrolled.exam1, enrolled.exam2, enrolled.final"
+                     + "FROM students"
+                     + "INNER JOIN enrolled ON students.sid = enrolled.sid"
+                     + "INNER JOIN courses on courses.cid = enrolled.cid"
+                     + "WHERE s.sid = '"+
+                     userID+
+                     "'");
+            ResultSet resultSet = pst.executeQuery();
+            
+            while(resultSet.next()){
+                return true;
+            }
+            
+         }catch(Exception e){
+             JOptionPane.showMessageDialog(frame, "Database Error: " + e.getMessage());
+         }
+         return false;
+     }
 }
 
