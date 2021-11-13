@@ -374,7 +374,7 @@ public class StaffGradeBook extends javax.swing.JFrame {
             int exam_Two = Integer.parseInt(examTwo.getText());
             int final_Exam = Integer.parseInt(finalExam.getText());
             
-            if(operations.addNewStudent(userID, courseID, exam_One, exam_Two, final_Exam, this)){
+            if(operations.registerNewStudent(userID, courseID, exam_One, exam_Two, final_Exam, this)){
                  JOptionPane.showMessageDialog(this, "You've succesfully updated the Gradebook!");
                  UpdateDB();
             }

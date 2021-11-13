@@ -33,8 +33,9 @@ public class StudentCourses extends javax.swing.JFrame {
         
         try{
              Connection myConn = MySQLConnection.getConnection();
-             PreparedStatement pst = myConn.prepareStatement("SELECT courses.cid, courses.cname, courses.meets_at, courses.room, courses.limitz\n" +
-            "FROM courses");
+             PreparedStatement pst = myConn.prepareStatement("SELECT courses.cid, courses.cname, courses.meets_at, courses.room, courses.limitz, faculty.fname, department.dname\n" +
+            "FROM courses, faculty, department\n"
+                     + "WHERE courses.FID = faculty.fid AND faculty.deptid = department.did");
             
             ResultSet rs = pst.executeQuery();
             ResultSetMetaData StData = rs.getMetaData();
@@ -54,6 +55,8 @@ public class StudentCourses extends javax.swing.JFrame {
                     columnData.add(rs.getString("meets_at"));
                     columnData.add(rs.getString("room"));
                     columnData.add(rs.getString("limitz"));
+                    columnData.add(rs.getString("fname"));
+                    columnData.add(rs.getString("dname"));
                 }    
                     RecordTable.addRow(columnData);
             }
@@ -84,6 +87,10 @@ public class StudentCourses extends javax.swing.JFrame {
         roomNumber_Txt = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         courseName_Txt = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        teacher_txt = new javax.swing.JTextField();
+        department_text = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -105,29 +112,29 @@ public class StudentCourses extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(5, 249, 234), 4));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Course ID");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 110, 40));
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 110, 40));
 
         courseID_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 courseID_TxtActionPerformed(evt);
             }
         });
-        jPanel4.add(courseID_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 400, 40));
+        jPanel4.add(courseID_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 180, 40));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Meets At");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 140, 40));
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 90, 40));
 
         meetsAt_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 meetsAt_TxtActionPerformed(evt);
             }
         });
-        jPanel4.add(meetsAt_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 400, 40));
+        jPanel4.add(meetsAt_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 180, 40));
 
         jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
@@ -167,29 +174,40 @@ public class StudentCourses extends javax.swing.JFrame {
 
         jPanel4.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 280, 160));
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Room");
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 140, 40));
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 80, 40));
 
         roomNumber_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 roomNumber_TxtActionPerformed(evt);
             }
         });
-        jPanel4.add(roomNumber_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 140, 40));
+        jPanel4.add(roomNumber_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, 160, 40));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Course Name");
-        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 140, 40));
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 110, 40));
 
         courseName_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 courseName_TxtActionPerformed(evt);
             }
         });
-        jPanel4.add(courseName_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 400, 40));
+        jPanel4.add(courseName_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 160, 40));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Teacher");
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 90, 40));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText("Department");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, 100, -1));
+        jPanel4.add(teacher_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 180, 40));
+        jPanel4.add(department_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, 160, 40));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 630, 420));
 
@@ -201,7 +219,7 @@ public class StudentCourses extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Course ID", "Course Name", "Meets At", "Room", "Limit"
+                "Course ID", "Course Name", "Meets At", "Room", "Limit", "Teacher", "Department"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -331,6 +349,8 @@ public class StudentCourses extends javax.swing.JFrame {
         courseName_Txt.setText(RecordTable.getValueAt(SelectedRows, 1).toString());
         meetsAt_Txt.setText(RecordTable.getValueAt(SelectedRows, 2).toString());
         roomNumber_Txt.setText(RecordTable.getValueAt(SelectedRows, 3).toString());
+        teacher_txt.setText(RecordTable.getValueAt(SelectedRows, 5).toString());
+        department_text.setText(RecordTable.getValueAt(SelectedRows, 6).toString());
  
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -414,14 +434,17 @@ public class StudentCourses extends javax.swing.JFrame {
     private javax.swing.JButton add_button;
     private javax.swing.JTextField courseID_Txt;
     private javax.swing.JTextField courseName_Txt;
+    private javax.swing.JTextField department_text;
     private javax.swing.JButton exit_button;
     private javax.swing.JButton goBack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -435,5 +458,6 @@ public class StudentCourses extends javax.swing.JFrame {
     private javax.swing.JButton printButton;
     private javax.swing.JTextField roomNumber_Txt;
     private javax.swing.JButton student_info;
+    private javax.swing.JTextField teacher_txt;
     // End of variables declaration//GEN-END:variables
 }

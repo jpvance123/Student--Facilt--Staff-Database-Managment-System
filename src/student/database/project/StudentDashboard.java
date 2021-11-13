@@ -482,11 +482,13 @@ public class StudentDashboard extends javax.swing.JFrame {
     
         try{
             int userID = LoginSession.UID;
-            String courseName = courseName_txt.getText();
             int courseID = Integer.parseInt(courseID_txt.getText());
-
+            int examOne = Integer.parseInt(examOne_txt.getText());
+            int examTwo = Integer.parseInt(examTwo_txt.getText());
+            int final_exam = Integer.parseInt(final_txt.getText());
             
-            if(operations.dropClass(userID, courseName, courseID, this)){
+            
+            if(operations.dropClass(userID, courseID, examOne, examTwo, final_exam, this)){
                  JOptionPane.showMessageDialog(this, "You've succesfully dropped a class");
                  UpdateDB();
             }

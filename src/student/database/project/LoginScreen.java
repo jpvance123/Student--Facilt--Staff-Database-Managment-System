@@ -188,13 +188,13 @@ public class LoginScreen extends javax.swing.JFrame {
             
             if(usertype.equals("Student") && operations.studentLogin(userID, usertype, this)){
                 dispose();
-                new Dashboard().setVisible(true);
+                new StudentChoices().setVisible(true);
             }else if(usertype.equals("Faculty") && operations.facultyLogin(userID, usertype, this)){
                 dispose();
                 new FacultyDashboard().setVisible(true);
             }else if(usertype.equals("Staff") && operations.staffLogin(userID, usertype, this)){
                 dispose();
-                new Dashboard().setVisible(true);
+                new StaffChoices().setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(this, "Please type correct information");
             }    
