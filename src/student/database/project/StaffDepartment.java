@@ -18,12 +18,12 @@ import javax.swing.JTable;
  *
  * @author jpvan
  */
-public class StaffCourses extends javax.swing.JFrame {
+public class StaffDepartment extends javax.swing.JFrame {
 
     /**
      * Creates new form FacultyDashboard
      */
-    public StaffCourses() {
+    public StaffDepartment() {
         initComponents();
         UpdateDB();
     }
@@ -33,7 +33,8 @@ public class StaffCourses extends javax.swing.JFrame {
         
         try{
              Connection myConn = MySQLConnection.getConnection();
-             PreparedStatement pst = myConn.prepareStatement("SELECT courses.* FROM courses");
+             PreparedStatement pst = myConn.prepareStatement("SELECT department.* "
+                     + "FROM department");
             
             ResultSet rs = pst.executeQuery();
             ResultSetMetaData StData = rs.getMetaData();
@@ -48,12 +49,8 @@ public class StaffCourses extends javax.swing.JFrame {
                 Vector columnData = new Vector();
                 
                 for (i = 1; i <= q; i++){
-                    columnData.add(rs.getString("cid"));
-                    columnData.add(rs.getString("cname"));
-                    columnData.add(rs.getString("meets_at"));
-                    columnData.add(rs.getString("room"));
-                    columnData.add(rs.getString("FID"));
-                    columnData.add(rs.getString("limitz"));
+                    columnData.add(rs.getString("did"));
+                    columnData.add(rs.getString("dname"));
                 }    
                     RecordTable.addRow(columnData);
             }
@@ -73,30 +70,22 @@ public class StaffCourses extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        facultyID_Txt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        courseID_Txt = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        meetsAt_Txt = new javax.swing.JTextField();
+        dept_ID = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
-        gradeBookButton = new javax.swing.JButton();
+        staffDBMS = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        coursesDBMS = new javax.swing.JButton();
+        choicesDBMS = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        roomNumber_Txt = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        courseName_Txt = new javax.swing.JTextField();
+        dept_Name = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
-        goBack = new javax.swing.JButton();
         addnew_button = new javax.swing.JButton();
         printButton = new javax.swing.JButton();
-        updateButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         exit_button1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -112,53 +101,35 @@ public class StaffCourses extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(5, 249, 234), 4));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Faculty ID");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, 140, 40));
-
-        facultyID_Txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                facultyID_TxtActionPerformed(evt);
-            }
-        });
-        jPanel4.add(facultyID_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 150, 40));
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Course ID");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 110, 40));
+        jLabel3.setText("Department ID");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 140, 40));
 
-        courseID_Txt.addActionListener(new java.awt.event.ActionListener() {
+        dept_ID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                courseID_TxtActionPerformed(evt);
+                dept_IDActionPerformed(evt);
             }
         });
-        jPanel4.add(courseID_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 400, 40));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Meets At");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 140, 40));
-
-        meetsAt_Txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                meetsAt_TxtActionPerformed(evt);
-            }
-        });
-        jPanel4.add(meetsAt_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 400, 40));
+        jPanel4.add(dept_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 380, 40));
 
         jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        gradeBookButton.setText("GradeBook");
-        gradeBookButton.addActionListener(new java.awt.event.ActionListener() {
+        staffDBMS.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        staffDBMS.setText("Staff DBMS");
+        staffDBMS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                staffDBMSMouseClicked(evt);
+            }
+        });
+        staffDBMS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gradeBookButtonActionPerformed(evt);
+                staffDBMSActionPerformed(evt);
             }
         });
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Student Gradebook");
+        jLabel18.setText("Staff DBMS");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -166,46 +137,43 @@ public class StaffCourses extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(68, Short.MAX_VALUE)
-                .addComponent(gradeBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(staffDBMS, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68))
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(95, Short.MAX_VALUE)
-                .addComponent(gradeBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(staffDBMS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGap(21, 21, 21)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(85, Short.MAX_VALUE)))
         );
 
         jPanel4.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 280, 160));
 
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        coursesDBMS.setText("Courses Offered");
-        coursesDBMS.addMouseListener(new java.awt.event.MouseAdapter() {
+        choicesDBMS.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        choicesDBMS.setText("Go Back");
+        choicesDBMS.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                coursesDBMSMouseClicked(evt);
+                choicesDBMSMouseClicked(evt);
             }
         });
-        coursesDBMS.addActionListener(new java.awt.event.ActionListener() {
+        choicesDBMS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coursesDBMSActionPerformed(evt);
+                choicesDBMSActionPerformed(evt);
             }
         });
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Go Back to Student DBMS");
+        jLabel17.setText("Go back DBMS selection");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -213,7 +181,7 @@ public class StaffCourses extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(68, 68, 68)
-                .addComponent(coursesDBMS, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(choicesDBMS, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
@@ -226,35 +194,22 @@ public class StaffCourses extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(coursesDBMS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(choicesDBMS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel4.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 280, -1));
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Room");
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 140, 40));
-
-        roomNumber_Txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roomNumber_TxtActionPerformed(evt);
-            }
-        });
-        jPanel4.add(roomNumber_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 140, 40));
-
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Course Name");
-        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 140, 40));
+        jLabel16.setText("Department Name");
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 180, 40));
 
-        courseName_Txt.addActionListener(new java.awt.event.ActionListener() {
+        dept_Name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                courseName_TxtActionPerformed(evt);
+                dept_NameActionPerformed(evt);
             }
         });
-        jPanel4.add(courseName_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 400, 40));
+        jPanel4.add(dept_Name, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 380, 40));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 630, 420));
 
@@ -266,7 +221,7 @@ public class StaffCourses extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Course ID", "Course Name", "Meets At", "Room", "Faculty ID", "Limit"
+                "Department ID", "Department Name"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -276,21 +231,12 @@ public class StaffCourses extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 760, 400));
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 490, 400));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 780, 420));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 520, 420));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(5, 249, 234), 4));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        goBack.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        goBack.setText("Go Back");
-        goBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                goBackActionPerformed(evt);
-            }
-        });
-        jPanel6.add(goBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 20, 210, 60));
 
         addnew_button.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         addnew_button.setText("Add new");
@@ -308,16 +254,7 @@ public class StaffCourses extends javax.swing.JFrame {
                 printButtonActionPerformed(evt);
             }
         });
-        jPanel6.add(printButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 210, 60));
-
-        updateButton.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        updateButton.setText("Update");
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateButtonActionPerformed(evt);
-            }
-        });
-        jPanel6.add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 210, 60));
+        jPanel6.add(printButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 210, 60));
 
         deleteButton.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         deleteButton.setText("Delete");
@@ -326,7 +263,7 @@ public class StaffCourses extends javax.swing.JFrame {
                 deleteButtonActionPerformed(evt);
             }
         });
-        jPanel6.add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 210, 60));
+        jPanel6.add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, 210, 60));
 
         exit_button1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         exit_button1.setText("Logout");
@@ -335,20 +272,21 @@ public class StaffCourses extends javax.swing.JFrame {
                 exit_button1ActionPerformed(evt);
             }
         });
-        jPanel6.add(exit_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 20, 210, 60));
+        jPanel6.add(exit_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 20, 210, 60));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 1410, 100));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 1160, 100));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 1440, 570));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 1190, 550));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
-        jLabel1.setText("Courses Database Managment System");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Department DBMS");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 1140, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1440, 90));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1190, 90));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
@@ -356,30 +294,22 @@ public class StaffCourses extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1436, Short.MAX_VALUE)
+            .addGap(0, 1186, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 86, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1440, 90));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1190, 90));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void facultyID_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyID_TxtActionPerformed
+    private void dept_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dept_IDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_facultyID_TxtActionPerformed
-
-    private void courseID_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseID_TxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_courseID_TxtActionPerformed
-
-    private void meetsAt_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meetsAt_TxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_meetsAt_TxtActionPerformed
+    }//GEN-LAST:event_dept_IDActionPerformed
 
     private void addnew_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addnew_buttonActionPerformed
         // TODO add your handling code here:        
@@ -387,15 +317,12 @@ public class StaffCourses extends javax.swing.JFrame {
     
         try{
             
-            int courseID = Integer.parseInt(courseID_Txt.getText());
-            String courseName = courseName_Txt.getText();
-            String meetsAT = meetsAt_Txt.getText();
-            int room = Integer.parseInt(roomNumber_Txt.getText());
-            int facultyID = Integer.parseInt(facultyID_Txt.getText());
-            int limitz = 10;
+            int deptID = Integer.parseInt(dept_ID.getText());
+            String deptName = dept_Name.getText();
+
             
-            if(operations.addNewCourses(courseID, courseName, meetsAT, room, facultyID, limitz, this)){
-                 JOptionPane.showMessageDialog(this, "You've succesfully added a new course!");
+            if(operations.addNewDepartment(deptID, deptName, this)){
+                 JOptionPane.showMessageDialog(this, "You've succesfully added a new department!");
                  UpdateDB();
             }
         }
@@ -404,13 +331,9 @@ public class StaffCourses extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addnew_buttonActionPerformed
 
-    private void roomNumber_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomNumber_TxtActionPerformed
+    private void dept_NameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dept_NameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_roomNumber_TxtActionPerformed
-
-    private void courseName_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseName_TxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_courseName_TxtActionPerformed
+    }//GEN-LAST:event_dept_NameActionPerformed
 
     private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
         // TODO add your handling code here:]
@@ -426,50 +349,14 @@ public class StaffCourses extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_printButtonActionPerformed
 
-    private void goBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackActionPerformed
-        // TODO add your handling code here:
-       dispose();
-       new StaffChoices().setVisible(true);
-    }//GEN-LAST:event_goBackActionPerformed
-
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         DefaultTableModel RecordTable = (DefaultTableModel)jTable1.getModel();
         int SelectedRows = jTable1.getSelectedRow();
         
-        courseID_Txt.setText(RecordTable.getValueAt(SelectedRows, 0).toString());
-        courseName_Txt.setText(RecordTable.getValueAt(SelectedRows, 1).toString());
-        meetsAt_Txt.setText(RecordTable.getValueAt(SelectedRows, 2).toString());
-        roomNumber_Txt.setText(RecordTable.getValueAt(SelectedRows, 3).toString());
-        facultyID_Txt.setText(RecordTable.getValueAt(SelectedRows, 4).toString()); 
+        dept_ID.setText(RecordTable.getValueAt(SelectedRows, 0).toString());
+        dept_Name.setText(RecordTable.getValueAt(SelectedRows, 1).toString());
     }//GEN-LAST:event_jTable1MouseClicked
-
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
-        DefaultTableModel RecordTable = (DefaultTableModel)jTable1.getModel();
-        int SelectedRows = jTable1.getSelectedRow();
-        
-        Operations operations = new Operations();
-    
-        try{
-            
-            int courseID = Integer.parseInt(courseID_Txt.getText());
-            String courseName = courseName_Txt.getText();
-            String meetsAT = meetsAt_Txt.getText();
-            int room = Integer.parseInt(roomNumber_Txt.getText());
-            int facultyID = Integer.parseInt(facultyID_Txt.getText());
-            int limitz = 10;
-            
-            if(operations.updateCourses(courseID, courseName, meetsAT, room, facultyID, limitz, this)){
-                 JOptionPane.showMessageDialog(this, "You've succesfully update the table!");
-                 UpdateDB();
-            }
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Please type corret information");
-        }
-        
-    }//GEN-LAST:event_updateButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
@@ -479,19 +366,16 @@ public class StaffCourses extends javax.swing.JFrame {
         Operations operations = new Operations();
     
         try{
+            int id = Integer.parseInt(RecordTable.getValueAt(SelectedRows,0).toString());
             int deleteItem = JOptionPane.showConfirmDialog(null, "Confirm if you want to delete item",
                     "Warning", JOptionPane.YES_NO_OPTION);
             
             if(deleteItem == JOptionPane.YES_OPTION){
-             int courseID = Integer.parseInt(courseID_Txt.getText());
-            String courseName = courseName_Txt.getText();
-            String meetsAT = meetsAt_Txt.getText();
-            int room = Integer.parseInt(roomNumber_Txt.getText());
-            int facultyID = Integer.parseInt(facultyID_Txt.getText());
-            int limitz = 10;
+            int deptID = Integer.parseInt(dept_ID.getText());
+            String deptName = dept_Name.getText();
             
-            if(operations.deleteCourses(courseID, courseName, meetsAT, room, facultyID, limitz, this)){
-                 JOptionPane.showMessageDialog(this, "You've succesfully deleted the course!");
+            if(operations.deleteDepartment(deptID, deptName, this)){
+                 JOptionPane.showMessageDialog(this, "You've succesfully deleted the record from the table!");
                  UpdateDB();
                 }
             }
@@ -501,21 +385,29 @@ public class StaffCourses extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void gradeBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradeBookButtonActionPerformed
-        // TODO add your handling code here:
-            dispose();
-            new StaffGradeBook().setVisible(true);
-    }//GEN-LAST:event_gradeBookButtonActionPerformed
-
-    private void coursesDBMSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_coursesDBMSMouseClicked
+    private void choicesDBMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choicesDBMSActionPerformed
         // TODO add your handling code here:
         dispose();
-        new StaffStudents().setVisible(true);
-    }//GEN-LAST:event_coursesDBMSMouseClicked
+        new StaffChoices().setVisible(true);       
+    }//GEN-LAST:event_choicesDBMSActionPerformed
 
-    private void coursesDBMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesDBMSActionPerformed
+    private void choicesDBMSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_choicesDBMSMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_coursesDBMSActionPerformed
+        dispose();
+        new StaffCourses().setVisible(true);
+    }//GEN-LAST:event_choicesDBMSMouseClicked
+
+    private void staffDBMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_staffDBMSActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new StaffFaculty().setVisible(true);
+    }//GEN-LAST:event_staffDBMSActionPerformed
+
+    private void staffDBMSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffDBMSMouseClicked
+        // TODO add your handling code here:
+        dispose();
+        new StaffFaculty().setVisible(true);
+    }//GEN-LAST:event_staffDBMSMouseClicked
 
     private void exit_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_button1ActionPerformed
         // TODO add your handling code here:
@@ -540,14 +432,26 @@ public class StaffCourses extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StaffCourses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StaffCourses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StaffCourses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StaffCourses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StaffDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -556,29 +460,23 @@ public class StaffCourses extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StaffCourses().setVisible(true);
+                new StaffDepartment().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addnew_button;
-    private javax.swing.JTextField courseID_Txt;
-    private javax.swing.JTextField courseName_Txt;
-    private javax.swing.JButton coursesDBMS;
+    private javax.swing.JButton choicesDBMS;
     private javax.swing.JButton deleteButton;
+    private javax.swing.JTextField dept_ID;
+    private javax.swing.JTextField dept_Name;
     private javax.swing.JButton exit_button1;
-    private javax.swing.JTextField facultyID_Txt;
-    private javax.swing.JButton goBack;
-    private javax.swing.JButton gradeBookButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -589,9 +487,7 @@ public class StaffCourses extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField meetsAt_Txt;
     private javax.swing.JButton printButton;
-    private javax.swing.JTextField roomNumber_Txt;
-    private javax.swing.JButton updateButton;
+    private javax.swing.JButton staffDBMS;
     // End of variables declaration//GEN-END:variables
 }

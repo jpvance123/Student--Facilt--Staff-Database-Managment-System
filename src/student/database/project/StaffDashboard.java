@@ -354,7 +354,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
             
             if(operations.addNewFaculty(facultyID, facultyName, department, this)){
-                 JOptionPane.showMessageDialog(this, "You've succesfully added a student");
+                 JOptionPane.showMessageDialog(this, "You've succesfully added a new Faculty member!");
                  UpdateDB();
             }
         }
@@ -406,7 +406,6 @@ public class StaffDashboard extends javax.swing.JFrame {
             
             if(operations.updateFaculty(facultyID, facultyName, department, this)){
                  JOptionPane.showMessageDialog(this, "You've succesfully update the table!");
-                 UpdateDB();
             }
         }
         catch(Exception e){

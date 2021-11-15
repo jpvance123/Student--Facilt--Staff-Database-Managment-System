@@ -191,7 +191,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 new StudentChoices().setVisible(true);
             }else if(usertype.equals("Faculty") && operations.facultyLogin(userID, usertype, this)){
                 dispose();
-                new FacultyDashboard().setVisible(true);
+                new FacultyStudents().setVisible(true);
             }else if(usertype.equals("Staff") && operations.staffLogin(userID, usertype, this)){
                 dispose();
                 new StaffChoices().setVisible(true);

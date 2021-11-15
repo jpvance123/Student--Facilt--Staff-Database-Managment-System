@@ -18,12 +18,12 @@ import javax.swing.JTable;
  *
  * @author jpvan
  */
-public class FacultyDashboard extends javax.swing.JFrame {
+public class FacultyDepartment extends javax.swing.JFrame {
 
     /**
      * Creates new form FacultyDashboard
      */
-    public FacultyDashboard() {
+    public FacultyDepartment() {
         initComponents();
         UpdateDB();
     }
@@ -33,9 +33,8 @@ public class FacultyDashboard extends javax.swing.JFrame {
         
         try{
              Connection myConn = MySQLConnection.getConnection();
-             PreparedStatement pst = myConn.prepareStatement("SELECT faculty.*, department.dname, courses.cid, courses.cname\n"
-                     + " FROM faculty, courses, department\n"
-                     + "WHERE faculty.fid = courses.FID AND faculty.deptid = department.did");
+             PreparedStatement pst = myConn.prepareStatement("SELECT department.* "
+                     + "FROM department");
             
             ResultSet rs = pst.executeQuery();
             ResultSetMetaData StData = rs.getMetaData();
@@ -50,12 +49,8 @@ public class FacultyDashboard extends javax.swing.JFrame {
                 Vector columnData = new Vector();
                 
                 for (i = 1; i <= q; i++){
-                    columnData.add(rs.getString("fid"));
-                    columnData.add(rs.getString("fname"));
-                    columnData.add(rs.getString("deptid"));
+                    columnData.add(rs.getString("did"));
                     columnData.add(rs.getString("dname"));
-                    columnData.add(rs.getString("cid"));
-                    columnData.add(rs.getString("cname"));
                 }    
                     RecordTable.addRow(columnData);
             }
@@ -76,13 +71,11 @@ public class FacultyDashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        facultyID_Txt = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        department_Txt = new javax.swing.JTextField();
+        dept_ID = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        facultyName_Txt = new javax.swing.JTextField();
+        dept_Name = new javax.swing.JTextField();
+        exitbutton = new javax.swing.JButton();
         go_back = new javax.swing.JButton();
-        exit_button = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -100,57 +93,56 @@ public class FacultyDashboard extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("Faculty ID");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 110, 40));
+        jLabel3.setText("Department ID");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 140, 40));
 
-        facultyID_Txt.addActionListener(new java.awt.event.ActionListener() {
+        dept_ID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                facultyID_TxtActionPerformed(evt);
+                dept_IDActionPerformed(evt);
             }
         });
-        jPanel4.add(facultyID_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 400, 40));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Department ID");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 140, 40));
-
-        department_Txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                department_TxtActionPerformed(evt);
-            }
-        });
-        jPanel4.add(department_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 400, 40));
+        jPanel4.add(dept_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 290, 40));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel16.setText("Faculty Name");
-        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 140, 40));
+        jLabel16.setText("Department Name");
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 180, 40));
 
-        facultyName_Txt.addActionListener(new java.awt.event.ActionListener() {
+        dept_Name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                facultyName_TxtActionPerformed(evt);
+                dept_NameActionPerformed(evt);
             }
         });
-        jPanel4.add(facultyName_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 400, 40));
+        jPanel4.add(dept_Name, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 290, 40));
 
-        go_back.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        exitbutton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        exitbutton.setText("Logout");
+        exitbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitbuttonMouseClicked(evt);
+            }
+        });
+        exitbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitbuttonActionPerformed(evt);
+            }
+        });
+        jPanel4.add(exitbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, 170, 60));
+
+        go_back.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         go_back.setText("Go Back");
+        go_back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                go_backMouseClicked(evt);
+            }
+        });
         go_back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 go_backActionPerformed(evt);
             }
         });
-        jPanel4.add(go_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 210, 60));
+        jPanel4.add(go_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 170, 60));
 
-        exit_button.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        exit_button.setText("Logout");
-        exit_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exit_buttonActionPerformed(evt);
-            }
-        });
-        jPanel4.add(exit_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 210, 60));
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 630, 420));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 550, 420));
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(5, 249, 234), 4));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -160,7 +152,7 @@ public class FacultyDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Faculty ID", "Faculty Name", "Dept. ID", "Department Name", "Course ID", "Course Name"
+                "Department ID", "Department Name"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -170,20 +162,21 @@ public class FacultyDashboard extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 760, 400));
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, 400));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 780, 420));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 590, 420));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 1440, 450));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 1190, 450));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
-        jLabel1.setText("Faculty Database Managment System");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Department DBMS");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 1140, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1440, 90));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1190, 90));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
@@ -191,52 +184,55 @@ public class FacultyDashboard extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1436, Short.MAX_VALUE)
+            .addGap(0, 1186, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 86, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1440, 90));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1190, 90));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void facultyID_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyID_TxtActionPerformed
+    private void dept_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dept_IDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_facultyID_TxtActionPerformed
+    }//GEN-LAST:event_dept_IDActionPerformed
 
-    private void department_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_department_TxtActionPerformed
+    private void dept_NameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dept_NameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_department_TxtActionPerformed
-
-    private void facultyName_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyName_TxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_facultyName_TxtActionPerformed
+    }//GEN-LAST:event_dept_NameActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         DefaultTableModel RecordTable = (DefaultTableModel)jTable1.getModel();
         int SelectedRows = jTable1.getSelectedRow();
         
-        facultyID_Txt.setText(RecordTable.getValueAt(SelectedRows, 0).toString());
-        facultyName_Txt.setText(RecordTable.getValueAt(SelectedRows, 1).toString());
-        department_Txt.setText(RecordTable.getValueAt(SelectedRows, 2).toString());
+        dept_ID.setText(RecordTable.getValueAt(SelectedRows, 0).toString());
+        dept_Name.setText(RecordTable.getValueAt(SelectedRows, 1).toString());
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void exitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitbuttonActionPerformed
+        // TODO add your handling code here:
+        LoginScreen loginScreen = new LoginScreen();
+        Logout.logOut(this, loginScreen);       
+    }//GEN-LAST:event_exitbuttonActionPerformed
+
+    private void exitbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitbuttonMouseClicked
+
+    }//GEN-LAST:event_exitbuttonMouseClicked
+
+    private void go_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_go_backMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_go_backMouseClicked
 
     private void go_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_go_backActionPerformed
         // TODO add your handling code here:
-       dispose();
-       new FacultyStudents().setVisible(true);
+        dispose();
+        new FacultyStudents().setVisible(true);
     }//GEN-LAST:event_go_backActionPerformed
-
-    private void exit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_buttonActionPerformed
-        // TODO add your handling code here:
-         LoginScreen loginScreen = new LoginScreen();
-        Logout.logOut(this, loginScreen);
-    }//GEN-LAST:event_exit_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,14 +251,30 @@ public class FacultyDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FacultyDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacultyDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FacultyDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacultyDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FacultyDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacultyDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FacultyDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacultyDepartment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -283,21 +295,19 @@ public class FacultyDashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FacultyDashboard().setVisible(true);
+                new FacultyDepartment().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField department_Txt;
-    private javax.swing.JButton exit_button;
-    private javax.swing.JTextField facultyID_Txt;
-    private javax.swing.JTextField facultyName_Txt;
+    private javax.swing.JTextField dept_ID;
+    private javax.swing.JTextField dept_Name;
+    private javax.swing.JButton exitbutton;
     private javax.swing.JButton go_back;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

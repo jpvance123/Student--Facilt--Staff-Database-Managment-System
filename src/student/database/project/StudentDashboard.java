@@ -501,7 +501,7 @@ public class StudentDashboard extends javax.swing.JFrame {
     private void backToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToActionPerformed
         // TODO add your handling code here:
         dispose();
-        new StaffChoices().setVisible(true);
+        new StudentChoices().setVisible(true);
     }//GEN-LAST:event_backToActionPerformed
 
     private void studentAge_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentAge_txtActionPerformed
@@ -518,6 +518,8 @@ public class StudentDashboard extends javax.swing.JFrame {
 
     private void catalog_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catalog_ButtonActionPerformed
         // TODO add your handling code here:
+        dispose();
+        new StudentCourses().setVisible(true);
     }//GEN-LAST:event_catalog_ButtonActionPerformed
 
     /**

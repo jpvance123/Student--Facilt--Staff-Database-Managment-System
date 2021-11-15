@@ -105,7 +105,7 @@ public class Operations {
         try{
          Connection myConn = MySQLConnection.getConnection();
          PreparedStatement pst = myConn.prepareStatement("UPDATE students SET sid =?, sname=?,"
-             + "major =?, s_level =?, age =? where id =?");
+             + "major =?, s_level =?, age =? where id =? AND userID =? ");
          
         
          pst.setInt(1, userID);
@@ -180,7 +180,7 @@ public class Operations {
               try{
          Connection myConn = MySQLConnection.getConnection();
          PreparedStatement pst = myConn.prepareStatement("UPDATE enrolled SET sid =?, cid=?,"
-             + "exam1 =?, exam2 =?, final =? WHERE sid =?");
+             + "exam1 =?, exam2 =?, final =? WHERE sid =? AND cid =?");
          
         
          pst.setInt(1, userID);
@@ -189,6 +189,7 @@ public class Operations {
          pst.setInt(4, examTwo);
          pst.setInt(5, finalExam); 
          pst.setInt(6, userID);
+         pst.setInt(7, courseID);
          pst.executeUpdate();
              
         return true;
@@ -203,9 +204,10 @@ public class Operations {
          try {
              Connection myConn = MySQLConnection.getConnection();
              PreparedStatement pst = myConn.prepareStatement("DELETE FROM enrolled where "
-                     + "sid =?");
+                     + "sid =? AND cid =?");
 
              pst.setInt(1, userID);
+             pst.setInt(2, courseID);
              pst.executeUpdate();
 
              return true;
@@ -362,9 +364,10 @@ public class Operations {
          try {
              Connection myConn = MySQLConnection.getConnection();
              PreparedStatement pst = myConn.prepareStatement("DELETE FROM staff where "
-                     + "sid =?");
+                     + "sid =? AND deptid =?");
 
              pst.setInt(1, staffID);
+             pst.setInt(2, department);
              pst.executeUpdate();
 
              return true;
@@ -381,12 +384,13 @@ public class Operations {
              if(length == 4){
              Connection myConn = MySQLConnection.getConnection();
              PreparedStatement pst = myConn.prepareStatement("UPDATE staff SET sid =?, sname =?,"
-                     + "deptid =? WHERE sid =?");
+                     + "deptid =? WHERE sid =? AND deptid =?");
 
              pst.setInt(1, facultyID);
              pst.setString(2, facultyName);
              pst.setInt(3, department);
              pst.setInt(4, facultyID);
+             pst.setInt(5, department);
 
              pst.executeUpdate();
 
@@ -451,6 +455,59 @@ public class Operations {
                 
                 
                 pst.executeUpdate();
+
+             return true;
+
+         } catch (Exception e) {
+             JOptionPane.showMessageDialog(frame, "Database Error: " + e.getMessage());
+         }
+         return false;
+     }
+     /* Department Methods */
+     public static boolean addNewDepartment(int dept_id, String dept_name, JFrame frame){
+         try {
+             Connection myConn = MySQLConnection.getConnection();
+             PreparedStatement pst = myConn.prepareStatement("INSERT into department (did, dname) VALUES (?,?) ");
+
+             pst.setInt(1, dept_id);
+             pst.setString(2, dept_name);
+
+             pst.executeUpdate();
+
+             return true;
+
+         } catch (Exception e) {
+             JOptionPane.showMessageDialog(frame, "Database Error: " + e.getMessage());
+         }
+         return false;
+     }
+     
+     public static boolean updateDepartment(int dept_id, String dept_name, JFrame frame){
+         try {
+             Connection myConn = MySQLConnection.getConnection();
+             PreparedStatement pst = myConn.prepareStatement("UPDATE department SET did =?, dname =?");
+
+             pst.setInt(1, dept_id);
+             pst.setString(2, dept_name);
+
+             pst.executeUpdate();
+
+             return true;
+
+         } catch (Exception e) {
+             JOptionPane.showMessageDialog(frame, "Database Error: " + e.getMessage());
+         }
+         return false;
+     }
+     public static boolean deleteDepartment(int dept_id, String dept_name, JFrame frame){
+         try {
+             Connection myConn = MySQLConnection.getConnection();
+             PreparedStatement pst = myConn.prepareStatement("DELETE FROM department where "
+                     + "did =? AND dname =?");
+
+             pst.setInt(1, dept_id);
+             pst.setString(2, dept_name);
+             pst.executeUpdate();
 
              return true;
 

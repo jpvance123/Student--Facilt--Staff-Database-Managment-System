@@ -12,9 +12,9 @@ import java.sql.*;
  */
 public class MySQLConnection {
     public static Connection getConnection() throws Exception {
-        String DB_URL = "jdbc:mysql://localhost:3306/first_iteration";
+        String DB_URL = "jdbc:mysql://localhost:3306/test";
         String USERNAME = "root";
-        String PASSWORD = "qwertypoiu";
+        String PASSWORD = "RhcpVanc3!";
         
         Connection myConn = null;
         myConn = (Connection)DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
